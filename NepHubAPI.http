@@ -1,0 +1,31 @@
+@NepHubAPI_HostAddress = http://localhost:5214
+
+GET {{NepHubAPI_HostAddress}}/api/richest
+
+###
+GET {{NepHubAPI_HostAddress}}/api/richest/3
+
+###
+POST  {{NepHubAPI_HostAddress}}/api/richest
+Content-Type: application/json
+
+{
+    "Name": "Upendra Mahato",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1EPbM9h1gf96ua90iDDrOT5-txRPmcijHZg&s",
+    "Designation": "Founder of Mahato Group",
+    "NetWorth": "1 Billion USD"
+}
+
+###
+PUT  {{NepHubAPI_HostAddress}}/api/richest/6
+Content-Type: application/json
+
+{
+    "Name": "Don Mahato",
+    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1EPbM9h1gf96ua90iDDrOT5-txRPmcijHZg&s",
+    "Designation": "Founder of Mahato Group",
+    "NetWorth": "1 Billion USD"
+}
+
+###
+DELETE  {{NepHubAPI_HostAddress}}/api/richest/3
