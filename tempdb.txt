@@ -1,0 +1,112 @@
+const quizData = [
+  {
+    question: "When was Nepal declared a federal democratic republic?",
+    options: ["2006", "2008", "2010", "2012"],
+    correctAnswer: "2008",
+  },
+  {
+    question: "Who was the first King of unified Nepal?",
+    options: [
+      "Prithvi Narayan Shah",
+      "Tribhuvan Bir Bikram Shah",
+      "Mahendra Bir Bikram Shah",
+      "Gyanendra Bir Bikram Shah",
+    ],
+    correctAnswer: "Prithvi Narayan Shah",
+  },
+  {
+    question: "Which year did Nepal become a member of the United Nations?",
+    options: ["1955", "1960", "1965", "1970"],
+    correctAnswer: "1955",
+  },
+  {
+    question: "When was the first democratic election held in Nepal?",
+    options: ["1959", "1962", "1965", "1968"],
+    correctAnswer: "1959",
+  },
+  {
+    question: "When was the Sugauli Treaty signed?",
+    options: ["1815", "1816", "1817", "1818"],
+    correctAnswer: "1816",
+  },
+  {
+    question: "Who is known as the 'Iron Man' of Nepal?",
+    options: [
+      "Bhimsen Thapa",
+      "Jung Bahadur Rana",
+      "Chandra Shumsher",
+      "Madan Bhandari",
+    ],
+    correctAnswer: "Jung Bahadur Rana",
+  },
+  {
+    question: "When was the Kot Massacre?",
+    options: ["1846", "1850", "1854", "1858"],
+    correctAnswer: "1846",
+  },
+  {
+    question: "Which year did Nepal adopt its first written constitution?",
+    options: ["1948", "1951", "1959", "1962"],
+    correctAnswer: "1948",
+  },
+  {
+    question: "When was the People's Movement I (Jana Andolan I)?",
+    options: ["1989", "1990", "1991", "1992"],
+    correctAnswer: "1990",
+  },
+  {
+    question: "Who was the first President of Nepal?",
+    options: [
+      "Ram Baran Yadav",
+      "Bidya Devi Bhandari",
+      "Girija Prasad Koirala",
+      "Sushil Koirala",
+    ],
+    correctAnswer: "Ram Baran Yadav",
+  },
+];
+
+ const nepalHistoricalEvents = [
+    {
+      title: "Unification of Nepal",
+      desc: "King Prithvi Narayan Shah unified the small kingdoms and principalities in the mid-18th century, forming modern Nepal.",
+      date: "1768-09-25",
+      imageUrl: "https://www.drive.nepaldatabase.com/uploads/images/202306/image_750x_648bd753c55f2.jpg",
+    },
+    {
+      title: "Nepal-British War",
+      desc: "The Anglo-Nepalese War between Nepal and the British East India Company, resulting in the Sugauli Treaty and the loss of territory.",
+      date: "1814-03-01",
+      imageUrl: "https://bordernepal.wordpress.com/wp-content/uploads/2011/10/nepal-british-battle.jpg",
+    },
+    {
+      title: "Treaty of Sugauli",
+      desc: "After the Nepal-British War, Nepal signed the Treaty of Sugauli in 1816, ceding parts of its territory to the British Empire.",
+      date: "1816-12-02",
+      imageUrl: "https://i.pinimg.com/736x/bb/ef/c9/bbefc93ef9eba44356744ffe126b6836.jpg",
+    },
+    {
+      title: "Establishment of the Rana Regime",
+      desc: "Jung Bahadur Rana established the autocratic Rana regime, ruling Nepal as hereditary prime ministers for over a century.",
+      date: "1846-09-15",
+      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Chandra_Shamsher_and_sons.jpg",
+    },
+    {
+      title: "Democracy Movement",
+      desc: "The 1951 Revolution marked the end of the Rana regime and the establishment of democracy in Nepal.",
+      date: "1951-02-18",
+      imageUrl: "https://superdesk-pro-c.s3.amazonaws.com/sd-nepalitimes/2022110912118/636b8aea9c7e80680e06b26bjpeg.jpg",
+    },
+    {
+      title: "King Mahendra's Coup",
+      desc: "In 1960, King Mahendra dissolved the democratic government and established a Panchayat system, centralizing power with the monarchy.",
+      date: "1960-12-15",
+      imageUrl: "https://pbs.twimg.com/media/EpQEZEYUYAYMGNl.jpg",
+    },
+    {
+      title: "People's Movement I",
+      desc: "In 1990, a popular movement forced the monarchy to restore democracy and allowed political parties to govern Nepal.",
+      date: "1990-04-08",
+      imageUrl: "https://aawaajnews.com/wp-content/uploads/2020/11/GMS-1-web.jpg",
+    }
+ ]

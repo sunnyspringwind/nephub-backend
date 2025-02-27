@@ -23,7 +23,6 @@ run the backend
 
 use fluentapi onModelCreating to set complex constraints seeding relationships
 
-
 basic program.cs structure
 1️⃣ Create builder	Prepares a toolbox for configuring the app.
 2️⃣ Add services (DI)	Registers features like controllers & database for dependency injection.
@@ -31,3 +30,14 @@ basic program.cs structure
 4️⃣ Add middleware	Defines steps that run before requests reach controllers (like security checks).
 5️⃣ Map controllers	Tells the app where to route API requests.
 6️⃣ Run the app	Starts the server, making it ready to handle requests.
+
+JWT AUTHENTICATION enhanced with IConfiguration
+    Install the necessary NuGet packages (JwtBearer and Microsoft.IdentityModel.Tokens).
+    Create a JwtHelper class to generate the token.
+    Configure JWT authentication in Program.cs.
+    Create a login API to authenticate users and return a token.
+    Secure API endpoints using the [Authorize] attribute.
+
+
+Managing users
+done by usermanager of identity core not the dbcontext dbcontext

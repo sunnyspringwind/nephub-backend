@@ -5,7 +5,7 @@
 namespace NepHubAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class richestapi : Migration
+    public partial class update4 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

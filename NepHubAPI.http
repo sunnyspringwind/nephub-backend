@@ -1,31 +1,31 @@
 @NepHubAPI_HostAddress = http://localhost:5214
 
-GET {{NepHubAPI_HostAddress}}/api/richest
+GET {{NepHubAPI_HostAddress}}/api/auth/getall
 
 ###
-GET {{NepHubAPI_HostAddress}}/api/richest/3
+GET {{NepHubAPI_HostAddress}}/api/PrimeMinister/3
 
 ###
-POST  {{NepHubAPI_HostAddress}}/api/richest
+POST  {{NepHubAPI_HostAddress}}/api/auth/register
 Content-Type: application/json
 
-{
-    "Name": "Upendra Mahato",
-    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1EPbM9h1gf96ua90iDDrOT5-txRPmcijHZg&s",
-    "Designation": "Founder of Mahato Group",
-    "NetWorth": "1 Billion USD"
-}
+    {
+        "Name": "Pushpa Kamal Dahal",
+        "Image": "https://english.corporatekhabar.com/wp-content/uploads/2024/06/Capture-46.jpg",
+        "Term": ["2008–2009", "2016–2017", "2022–present"],
+        "Party": "Communist Party of Nepal (Maoist Centre)",
+    }
 
 ###
-PUT  {{NepHubAPI_HostAddress}}/api/richest/6
+PUT  {{NepHubAPI_HostAddress}}/api/PrimeMinister/3
 Content-Type: application/json
 
-{
-    "Name": "Don Mahato",
-    "Image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1EPbM9h1gf96ua90iDDrOT5-txRPmcijHZg&s",
-    "Designation": "Founder of Mahato Group",
-    "NetWorth": "1 Billion USD"
-}
+    {
+        "Name" : "Sher Bahadur Deuba",
+        "Image" : "https://mofa.gov.np/wp-content/uploads/2021/07/Rt.-Hon.-Prime-Minister-Sher-Bahadur-Deuba-12x15-1-scaled.jpg",
+        "Term" : ["1995–1997", "2001–2002", "2004–2005", "2017–2018", "2021–2022"],
+        "Party" : "Nepali Congress"
+    }
 
 ###
-DELETE  {{NepHubAPI_HostAddress}}/api/richest/3
+DELETE  {{NepHubAPI_HostAddress}}/api/PrimeMinister/3
