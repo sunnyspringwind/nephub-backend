@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NepHubAPI.Migrations
 {
     [DbContext(typeof(NepHubContext))]
-    [Migration("20250227165101_update5")]
-    partial class update5
+    [Migration("20250326130136_entityupdate")]
+    partial class entityupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace NepHubAPI.Migrations
                         new
                         {
                             Id = "1",
-                            Name = "Admin",
+                            Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            Name = "User",
+                            Name = "USER",
                             NormalizedName = "USER"
                         });
                 });
@@ -275,6 +275,10 @@ namespace NepHubAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
@@ -283,6 +287,10 @@ namespace NepHubAPI.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()

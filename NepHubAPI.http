@@ -1,10 +1,18 @@
 @NepHubAPI_HostAddress = http://localhost:5214
 
-GET {{NepHubAPI_HostAddress}}/api/auth/getall
+GET {{NepHubAPI_HostAddress}}/api/quiziz
 
 ###
-GET {{NepHubAPI_HostAddress}}/api/PrimeMinister/3
+PUT {{NepHubAPI_HostAddress}}/api/auth/update-profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZjg1M2U5ZC1kNjVlLTQwNDItOGY0MS0zNjM3N2Q0NmY2NDkiLCJlbWFpbCI6ImFsZWVzYUBuZXAuY29tIiwiZ2l2ZW5fbmFtZSI6ImFsZWVzYSIsIm5iZiI6MTc0MTc2MjMzNywiZXhwIjoxNzQxNzYyNjM3LCJpYXQiOjE3NDE3NjIzMzcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTIxNCIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTIxNCJ9.1l8u6cClfVJrmVyfYa0kD0cOPd6Bpg3yylHiv6k0VXY
 
+    {
+        "username": "aleesa",
+        "email": "aleesa@nep.com",
+        "bio": "she smells of daisy",
+        "imageUrl": "https://img.freepik.com/free-photo/woman-beach-with-her-baby-enjoying-sunset_52683-144131.jpg?size=626&ext=jpg"
+    }
 ###
 POST  {{NepHubAPI_HostAddress}}/api/auth/register
 Content-Type: application/json

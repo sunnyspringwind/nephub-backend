@@ -28,8 +28,8 @@ public class NepHubContext(DbContextOptions<NepHubContext> options) : IdentityDb
         base.OnModelCreating(modelBuilder); //configures internal identity context
 
         modelBuilder.Entity<IdentityRole>().HasData(
-            new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
-            new IdentityRole { Id = "2", Name = "User", NormalizedName = "USER" }
+            new IdentityRole { Id = "1", Name = "ADMIN", NormalizedName = "ADMIN" },
+            new IdentityRole { Id = "2", Name = "USER", NormalizedName = "USER" }
         );
 
         modelBuilder.Entity<QuizScore>()
@@ -49,5 +49,6 @@ public class NepHubContext(DbContextOptions<NepHubContext> options) : IdentityDb
             .WithMany(e => e.Attributes)
             .HasForeignKey(a => a.EntityId)
             .OnDelete(DeleteBehavior.Cascade);
+            
     }
 }

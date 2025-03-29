@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NepHubAPI.Migrations
 {
     [DbContext(typeof(NepHubContext))]
-    [Migration("20250227162642_update3")]
-    partial class update3
+    [Migration("20250318195906_update roles")]
+    partial class updateroles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace NepHubAPI.Migrations
                         new
                         {
                             Id = "1",
-                            Name = "Admin",
+                            Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            Name = "User",
+                            Name = "USER",
                             NormalizedName = "USER"
                         });
                 });
@@ -179,6 +179,9 @@ namespace NepHubAPI.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Bio")
+                        .HasColumnType("text");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -189,6 +192,9 @@ namespace NepHubAPI.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");

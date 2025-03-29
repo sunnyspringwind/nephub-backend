@@ -5,34 +5,36 @@
 namespace NepHubAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class update5 : Migration
+    public partial class entityupdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Bio",
-                table: "AspNetUsers",
+                name: "Description",
+                table: "Entity",
                 type: "text",
-                nullable: true);
+                nullable: false,
+                defaultValue: "");
 
             migrationBuilder.AddColumn<string>(
-                name: "ImageUrl",
-                table: "AspNetUsers",
+                name: "Position",
+                table: "Entity",
                 type: "text",
-                nullable: true);
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Bio",
-                table: "AspNetUsers");
+                name: "Description",
+                table: "Entity");
 
             migrationBuilder.DropColumn(
-                name: "ImageUrl",
-                table: "AspNetUsers");
+                name: "Position",
+                table: "Entity");
         }
     }
 }

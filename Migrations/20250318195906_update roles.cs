@@ -4,10 +4,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace NepHubAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class updateroles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,6 +33,8 @@ namespace NepHubAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
+                    Bio = table.Column<string>(type: "text", nullable: true),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -217,7 +221,7 @@ namespace NepHubAPI.Migrations
                     ScoreId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    UserId1 = table.Column<string>(type: "text", nullable: true),
+                    RequestById = table.Column<string>(type: "text", nullable: true),
                     Subject = table.Column<string>(type: "text", nullable: false),
                     Details = table.Column<string>(type: "text", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true)
@@ -226,8 +230,8 @@ namespace NepHubAPI.Migrations
                 {
                     table.PrimaryKey("PK_UpdateRequests", x => x.ScoreId);
                     table.ForeignKey(
-                        name: "FK_UpdateRequests_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_UpdateRequests_AspNetUsers_RequestById",
+                        column: x => x.RequestById,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -302,6 +306,15 @@ namespace NepHubAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1", null, "ADMIN", "ADMIN" },
+                    { "2", null, "USER", "USER" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -365,9 +378,9 @@ namespace NepHubAPI.Migrations
                 column: "EntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UpdateRequests_UserId1",
+                name: "IX_UpdateRequests_RequestById",
                 table: "UpdateRequests",
-                column: "UserId1");
+                column: "RequestById");
         }
 
         /// <inheritdoc />

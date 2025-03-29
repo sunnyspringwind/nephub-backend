@@ -1,10 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NepHubAPI.Data;
 using NepHubAPI.Dtos.Users;
 using NepHubAPI.Interface;
 using NepHubAPI.Models;
@@ -31,13 +29,22 @@ namespace NepHubAPI.Controllers
         public async Task<ActionResult> GetAll()
         {
             var users = await _userManager.Users.ToListAsync();
-            var userDtos = users.Select(user => new ViewUserDto
+            var userDtos = new List<ViewUserDto>();
+
+            foreach (var user in users)
             {
-                Username = user.UserName!,
-                Email = user.Email!,
-                Token = _tokenService.CreateToken(user),
-                UserId = user.Id
-            }).ToList();
+                var token = await _tokenService.CreateToken(user, _userManager);
+                userDtos.Add(new ViewUserDto
+                {
+                    Username = user.UserName!,
+                    Email = user.Email!,
+                    Bio = user.Bio,
+                    ImageUrl = user.ImageUrl,
+                    Token = token,
+                    UserId = user.Id
+                });
+            }
+
             return Ok(userDtos);
         }
 
@@ -49,10 +56,11 @@ namespace NepHubAPI.Controllers
             try
             {
                 var existingUser = await _userManager.Users.Where(user => user.UserName == newUserDto.Username || user.Email == newUserDto.Email).FirstOrDefaultAsync();
-                if (existingUser?.UserName != null)
-                    return BadRequest("Username already exists");
-                if (existingUser?.Email != null)
-                    return BadRequest("Email already exists");
+                if (existingUser?.Email == newUserDto.Email?.ToLower())
+                    return BadRequest(new {message = "Email already exists"});
+                if (existingUser?.UserName == newUserDto.Username)
+                    return BadRequest(new {message = "Username already exists"});
+              
                 var newUser = new AppUser
                 {
                     UserName = newUserDto.Username,
@@ -87,18 +95,76 @@ namespace NepHubAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDto loginDto)
+        public async Task<ActionResult> Login([FromBody] LoginUserDto loginDto)
+        {   
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
+            {
+                // Find user by username or email
+                var user = await _userManager.FindByNameAsync(loginDto.Email) ??
+                           await _userManager.FindByEmailAsync(loginDto.Email);
+
+                if (user == null)
+                    return Unauthorized("Invalid username or password");
+
+                // Check password
+                var isPasswordValid = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+
+                if (!isPasswordValid)
+                    return Unauthorized("Invalid username or password");
+
+                // Get user roles (for display purposes, but the real roles are in the token)
+                var roles = await _userManager.GetRolesAsync(user);
+
+                // Generate JWT token with role claims
+                var token = await _tokenService.CreateToken(user, _userManager);
+
+                // Return user info
+                return Ok(new
+                {
+                    id = user.Id,
+                    username = user.UserName,
+                    email = user.Email,
+                    imageUrl = user.ImageUrl,
+                    bio = user.Bio,
+                    token = token
+                });
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto updateUserDto)
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(user => user.UserName == loginDto.Username);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized(new { message = "Invalid token" });
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(user => user.Id == userId);
+            Console.WriteLine($"Updating user: {user.UserName}, Email: {user.Email}");
 
             if (user == null)
             {
-                return NotFound("Username does not exist");
+                return NotFound();
             }
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+            user.UserName = (updateUserDto.Username == "")? user.UserName : updateUserDto.Username;
+            user.Email = (updateUserDto.Email== "")? user.Email : updateUserDto.Email;
+            user.ImageUrl = (updateUserDto.ImageUrl== "")? user.ImageUrl : updateUserDto.ImageUrl;
+            user.Bio = (updateUserDto.Bio == "")? user.Bio : updateUserDto.Bio;
 
-            if (!result.Succeeded) return Unauthorized("Invalid username or password");
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
 
             return Ok(new ViewUserDto
             {
@@ -106,10 +172,10 @@ namespace NepHubAPI.Controllers
                 Email = user.Email!,
                 ImageUrl = user.ImageUrl,
                 Bio = user.Bio,
-                Token = _tokenService.CreateToken(user),
-
+                Token = await _tokenService.CreateToken(user, _userManager),
             });
         }
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] string id)

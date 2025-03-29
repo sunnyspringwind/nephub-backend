@@ -32,27 +32,41 @@ namespace NepHubAPI.Controllers
             return Ok(question);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateQuiz([FromBody] CreateQuizizDto quizDto)
+        //get by category
+        [HttpGet("category")]
+        public async Task<IActionResult> GetByCategory(string category) 
         {
-            if (quizDto == null)
-            {
-                return BadRequest();
-            }
-
-            var quiz = new Quiziz
-            {
-                Question = quizDto.Question,
-                Options = quizDto.Options,
-                CorrectAnswer = quizDto.CorrectAnswer,
-                Category = quizDto.Category
-            };
-
-            await _context.Quiziz.AddAsync(quiz);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetById), new { id = quiz.Id }, quiz);
+            var questons = await _context.Quiziz
+                .Where(quiz => quiz.Category.ToLower() == category.ToLower())
+                .ToListAsync();
+            return Ok(questons);
         }
+
+      [HttpPost]
+public async Task<IActionResult> CreateQuizSet([FromBody] List<CreateQuizizDto> quizDtos)
+{
+    if (quizDtos == null || !quizDtos.Any())
+    {
+        return BadRequest("Quiz data is required.");
+    }
+
+    var quizzes = quizDtos
+        .SelectMany(quizDto => quizDto.QuestionSets) // Flatten the QuestionSets
+        .Select(questionSet => new Quiziz
+        {
+            Question = questionSet.Question,
+            Options = questionSet.Options,
+            CorrectAnswer = questionSet.CorrectAnswer,
+            Category = questionSet.Category
+        })
+        .ToList();
+
+    await _context.Quiziz.AddRangeAsync(quizzes);
+    await _context.SaveChangesAsync();
+
+    return Ok(quizzes);
+}
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateQuiz([FromRoute] int id, [FromBody] UpdateQuizizDto updatedDto)
